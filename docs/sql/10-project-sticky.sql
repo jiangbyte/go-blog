@@ -1,4 +1,5 @@
 -- Author: go-blog — 项目置顶字段（已有行默认不置顶）
+USE go_blog;
 
 SET @has_proj_sticky := (
   SELECT COUNT(*) FROM information_schema.COLUMNS

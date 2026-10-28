@@ -5,9 +5,17 @@ import AppIcon from '@/components/chrome/AppIcon.vue'
 
 const site = getSite()
 
+const DEFAULT_AVATAR = '/img/logo.png'
+const DEFAULT_BACKGROUND = '/img/default.png'
+
 const avatarUrl = computed(() => {
   const url = String(site.author?.avatar_url || '').trim()
-  return url || String(site.icon || '').trim()
+  return url || String(site.icon || '').trim() || DEFAULT_AVATAR
+})
+
+const backgroundUrl = computed(() => {
+  const url = String(site.author?.background_url || '').trim()
+  return url || DEFAULT_BACKGROUND
 })
 
 const displayName = computed(() => String(site.author?.name || site.site_name || '').trim())
@@ -29,12 +37,11 @@ function isInternalPath(url: string | undefined) {
   <section class="glass-card author-card relative overflow-hidden">
     <div
       class="absolute inset-0 bg-cover bg-center"
-      :style="{ backgroundImage: `url('${site.author?.background_url || ''}')` }"
+      :style="{ backgroundImage: `url('${backgroundUrl}')` }"
     />
     <div class="author-card__shade absolute inset-0" />
     <div class="author-card__body relative z-10 flex flex-col items-center text-center text-white">
       <img
-        v-if="avatarUrl"
         :src="avatarUrl"
         alt=""
         class="author-card__avatar"

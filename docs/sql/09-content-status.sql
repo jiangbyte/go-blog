@@ -1,4 +1,5 @@
 -- Author: go-blog — 文章/项目草稿状态（已有行默认 published）
+USE go_blog;
 
 SET @has_post_status := (
   SELECT COUNT(*) FROM information_schema.COLUMNS

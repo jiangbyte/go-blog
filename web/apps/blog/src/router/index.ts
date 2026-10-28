@@ -13,8 +13,6 @@ const ROUTE_SEO: Record<string, { title: string; description: string; noindex?: 
   projects: { title: '项目', description: '已发布的开源与个人项目' },
   'project-tags': { title: '项目标签', description: '按标签浏览项目' },
   about: { title: '关于', description: '关于本站与作者' },
-  'tools-json': { title: 'JSON 工具', description: '在线 JSON 格式化与校验', noindex: true },
-  'tools-subnet': { title: '子网计算', description: 'CIDR / 子网掩码计算', noindex: true },
   'not-found': { title: '页面不存在', description: '', noindex: true },
 }
 
@@ -65,16 +63,6 @@ const router = createRouter({
           component: () => import('@/views/ProjectTagTermView.vue'),
         },
         { path: 'about', name: 'about', component: () => import('@/views/AboutView.vue') },
-        {
-          path: 'tools/json',
-          name: 'tools-json',
-          component: () => import('@/views/ToolsJsonView.vue'),
-        },
-        {
-          path: 'tools/subnet',
-          name: 'tools-subnet',
-          component: () => import('@/views/ToolsSubnetView.vue'),
-        },
       ],
     },
     {

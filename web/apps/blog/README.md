@@ -28,8 +28,6 @@ npm run preview
 | `/categories` `/categories/:uid` | 分类 |
 | `/tags` `/tags/:uid` | 标签 |
 | `/project-tags` `/project-tags/:uid` | 项目标签 |
-| `/tools/json` | JSON 格式化 |
-| `/tools/subnet` | 子网划分 |
 | `/about` | 关于 |
 | 其它 | 404 |
 

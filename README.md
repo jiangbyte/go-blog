@@ -1,6 +1,6 @@
 # go-blog
 
-个人博客全栈模板：**Go（Gin + GORM）** + **Vue 前台 / 管理端 / 简历站**。单管理员、弱化 RBAC，开箱可跑本地开发与 Docker 部署。
+个人博客全栈系统：**Go（Gin + GORM）** + **Vue 前台 / 管理端 / 简历站**。单管理员、弱化 RBAC，开箱可跑本地开发与 Docker 部署。
 
 ## 特性
 
@@ -10,6 +10,28 @@
 - 滑块验证码登录；响应信封 `{ code, message, data }`（成功 `0000`）
 - URL 约定：`/auth`、`/admin/...`、`/portal/...`；仅 GET / POST；JSON **snake_case**
 - 可选 sitemap / IndexNow 推送
+
+## 界面预览
+
+### 前台
+
+![首页](docs/screenshots/blog-home.jpg)
+
+![文章详情](docs/screenshots/blog-post.jpg)
+
+![项目列表](docs/screenshots/blog-projects.jpg)
+
+![搜索](docs/screenshots/blog-search.jpg)
+
+### 管理端
+
+![概览](docs/screenshots/admin-dashboard.jpg)
+
+![文章管理](docs/screenshots/admin-posts.jpg)
+
+![站点配置](docs/screenshots/admin-site.jpg)
+
+![个人中心](docs/screenshots/admin-profile.jpg)
 
 ## 目录结构
 
@@ -129,4 +151,4 @@ Blog 前端经 Vite 代理 `/api` → Gin。前台路由含 `/resume`。
 
 - 单管理员：不做多用户 / 角色树；登录即为全权限。
 - Seed 仅为演示内容，可按需在管理端改掉。
-- 本模板已脱敏：请将 `example.com`、空密钥等换成你自己的配置，**不要**把 `.env`、`data/`、数据库 dump 提交到公开仓库。
+- 示例配置已脱敏：请将 `example.com`、空密钥等换成你自己的配置，**不要**把 `.env`、`data/`、数据库 dump 提交到公开仓库。

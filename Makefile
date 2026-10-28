@@ -23,7 +23,7 @@ MYSQL_USER     := $(if $(MYSQL_USER),$(MYSQL_USER),root)
 MYSQL_DATABASE := $(if $(MYSQL_DATABASE),$(MYSQL_DATABASE),go_blog)
 MYSQL_DOCKER   := $(if $(MYSQL_DOCKER),$(MYSQL_DOCKER),mysql)
 
-MYSQL_DOCKER_EXEC := docker exec -i $(MYSQL_DOCKER) mysql -u$(MYSQL_USER) --password=$(MYSQL_PASSWORD) --default-character-set=utf8mb4
+MYSQL_DOCKER_EXEC := docker exec -i $(MYSQL_DOCKER) mysql -u$(MYSQL_USER) --password=$(MYSQL_PASSWORD) --default-character-set=utf8mb4 $(MYSQL_DATABASE)
 
 export GOPROXY ?= https://goproxy.cn,direct
 
@@ -67,11 +67,13 @@ install-be: ## Go 依赖
 install-fe: ## pnpm install
 	cd $(WEB) && pnpm install
 
-sql: ## 按文件名顺序执行 docs/sql/*.sql
+sql: ## 按文件名顺序执行 docs/sql/*.sql，并写入 Markdown 厨房水槽正文
 	@for f in $$(ls $(SQL_DIR)/*.sql | sort); do \
 	  echo "==> $$f"; \
 	  $(MYSQL_DOCKER_EXEC) < $$f; \
 	done
+	@MYSQL_DOCKER=$(MYSQL_DOCKER) MYSQL_USER=$(MYSQL_USER) MYSQL_PASSWORD=$(MYSQL_PASSWORD) MYSQL_DATABASE=$(MYSQL_DATABASE) \
+	  python3 $(ROOT)/scripts/seed-markdown-body.py
 	@echo "sql done → $(MYSQL_DATABASE)"
 
 sql-list: ## 列出 SQL
