@@ -4,7 +4,7 @@
 #   docker compose -f docker-compose.prod.yml pull
 #   docker compose -f docker-compose.prod.yml up -d --force-recreate
 #
-# 本机发版：make docker-push IMAGE_VERSION=1.0.1  （同时推 :1.0.1 与 :latest）
+# 本机发版：make docker-push IMAGE_VERSION=1.0.0  （同时推 :1.0.0 与 :latest）
 # 需先：docker login your-registry.example.com
 
 name: go-blog

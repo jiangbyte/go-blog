@@ -4,7 +4,7 @@
 # ACR 不接受 BuildKit provenance/SBOM，构建时关闭。
 #
 # Usage:
-#   ./deploy/scripts/docker-build-push.sh           # 默认 1.0.1 + latest
+#   ./deploy/scripts/docker-build-push.sh           # 默认 1.0.0 + latest
 #   ./deploy/scripts/docker-build-push.sh 1.0.2
 #   VERSION=1.0.2 ./deploy/scripts/docker-build-push.sh
 #   make docker-push IMAGE_VERSION=1.0.2
@@ -15,7 +15,7 @@ cd "$ROOT"
 
 REGISTRY="${REGISTRY:-your-registry.example.com}"
 NAMESPACE="${NAMESPACE:-your-namespace}"
-VERSION="${1:-${VERSION:-1.0.1}}"
+VERSION="${1:-${VERSION:-1.0.0}}"
 PREFIX="${REGISTRY}/${NAMESPACE}"
 
 # 镜像名 → Dockerfile 相对仓库根路径 → build context → 额外 build-arg

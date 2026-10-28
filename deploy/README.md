@@ -57,7 +57,7 @@ docker compose up -d --build
 # 按需覆盖 registry / namespace
 export REGISTRY=your-registry.example.com
 export NAMESPACE=your-namespace
-make docker-push IMAGE_VERSION=1.0.1
+make docker-push IMAGE_VERSION=1.0.0
 ```
 
 ### 1. 前置
@@ -157,7 +157,7 @@ STORAGE_QINIU_BASE_URL=https://images.example.com
 
 ```bash
 # 本机：打版本号 + 覆盖 latest
-make docker-push IMAGE_VERSION=1.0.1
+make docker-push IMAGE_VERSION=1.0.0
 # 服务器：只拉 latest
 cd ~/go-blog/deploy
 docker compose -f docker-compose.prod.yml pull
@@ -179,8 +179,8 @@ docker volume ls | grep go-blog   # api_data / gateway_caddy_data 勿误删
 
 ```bash
 REGISTRY=your-registry.example.com NAMESPACE=your-namespace \
-  ./deploy/scripts/docker-build-push.sh 1.0.1
-# 或：make docker-push IMAGE_VERSION=1.0.1
+  ./deploy/scripts/docker-build-push.sh 1.0.0
+# 或：make docker-push IMAGE_VERSION=1.0.0
 ```
 
 | 镜像 | 仓库名 |

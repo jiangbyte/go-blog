@@ -139,7 +139,7 @@ docker-logs: ## 跟踪 deploy/compose 日志
 docker-ps: ## 查看 deploy/compose 状态
 	cd $(DEPLOY) && docker compose ps
 
-docker-push: ## 构建并推送 ACR（:IMAGE_VERSION + :latest；默认 1.0.1）
+docker-push: ## 构建并推送 ACR（:IMAGE_VERSION + :latest；默认 1.0.0）
 	$(DEPLOY)/scripts/docker-build-push.sh $(IMAGE_VERSION)
 
 open:
