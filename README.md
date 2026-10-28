@@ -11,7 +11,8 @@ Go（Gin + GORM）· Vue 前台 / 管理端 / 简历站 · 单管理员 · Docke
 [![GORM](https://img.shields.io/badge/GORM-1.30-red)](https://gorm.io/)
 [![Vue](https://img.shields.io/badge/Vue-3.5-brightgreen?logo=vue.js&logoColor=white)](https://vuejs.org/)
 [![Naive UI](https://img.shields.io/badge/Naive%20UI-2.x-60a5fa)](https://www.naiveui.com/)
-[![License](https://img.shields.io/badge/license-see%20repo-lightgrey)](https://github.com/jiangbyte/go-blog)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Release](https://img.shields.io/github/v/release/jiangbyte/go-blog)](https://github.com/jiangbyte/go-blog/releases)
 
 </div>
 
@@ -30,6 +31,7 @@ Go（Gin + GORM）· Vue 前台 / 管理端 / 简历站 · 单管理员 · Docke
 - [常用命令](#常用命令)
 - [API 约定](#api-约定)
 - [说明](#说明)
+- [许可证](#许可证)
 
 ## 界面预览
 
@@ -197,7 +199,7 @@ docker compose up -d --build
 | `make build` | 构建 API 与前端 |
 | `make jb-md` | 构建 Markdown 上传 CLI → `bin/jb-md` |
 | `make docker-up` / `down` / `logs` | Compose |
-| `make docker-push IMAGE_VERSION=1.0.1` | 推送镜像（需配置 registry） |
+| `make docker-push IMAGE_VERSION=1.0.0` | 推送镜像（需配置 registry） |
 
 `jb-md` 详见 [`cmd/jb-md/README.md`](cmd/jb-md/README.md)。
 
@@ -215,6 +217,10 @@ Blog 经 Vite 代理 `/api` → Gin。
 - 单管理员：无多用户 / 角色树。
 - Seed 为演示数据，可在管理端改掉。
 - 请将 `example.com`、空密钥换成自己的配置；**勿**提交 `.env`、`data/`、数据库 dump。
+
+## 许可证
+
+本项目基于 [MIT License](./LICENSE) 开源。
 
 ---
 

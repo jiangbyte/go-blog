@@ -37,7 +37,7 @@ export GOPROXY ?= https://goproxy.cn,direct
 
 DEPLOY := $(ROOT)/deploy
 # 推送时打 :IMAGE_VERSION 与 :latest；线上 compose 只拉 :latest
-IMAGE_VERSION ?= 1.0.1
+IMAGE_VERSION ?= 1.0.0
 
 help: ## 显示命令
 	@echo "go-blog 开发命令"
