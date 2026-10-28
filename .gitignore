@@ -1,0 +1,22 @@
+.env
+.env.docker
+deploy/.env
+bin/
+data/
+tmp/
+*.exe
+*.log
+.DS_Store
+web/node_modules/
+web/**/node_modules/
+web/**/dist/
+web/**/.vite/
+*.tsbuildinfo
+
+# 本地二进制与数据库 dump，勿提交
+/server
+backup.sql
+*.sql.gz
+
+# IndexNow 验证文件（部署时按 INDEXNOW_KEY 生成 {key}.txt）
+web/apps/blog/public/[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].txt

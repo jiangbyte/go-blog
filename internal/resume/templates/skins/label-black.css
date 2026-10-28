@@ -1,0 +1,32 @@
+/** Author: go-blog — 模板 label-black：黑色圆角标签 */
+
+.resume-template--label-black .section-header {
+  gap: 0;
+  justify-content: flex-start;
+}
+
+.resume-template--label-black .section-header__icon,
+.resume-template--label-black .section-header__line {
+  display: none;
+}
+
+.resume-template--label-black .section-header__title {
+  display: inline-block;
+  background: #111;
+  color: #fff !important;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: calc(13px * var(--font-scale, 1));
+  letter-spacing: 0.04em;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+@media print {
+  .resume-template--label-black .section-header__title {
+    color: #fff !important;
+    background: #111 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}

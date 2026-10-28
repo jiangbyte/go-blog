@@ -1,0 +1,35 @@
+/** Author: go-blog — 模板 super-blue：蓝色平行四边形标题徽标 */
+
+.resume-template--super-blue .section-header {
+  gap: 0;
+  justify-content: flex-start;
+  background: transparent;
+  padding: 0;
+}
+
+.resume-template--super-blue .section-header__icon,
+.resume-template--super-blue .section-header__line {
+  display: none;
+}
+
+.resume-template--super-blue .section-header__title {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff !important;
+  padding: 5px 18px;
+  font-size: calc(13px * var(--font-scale, 1));
+  letter-spacing: 0.04em;
+  /* 平行四边形：左右切角，文字不倾斜 */
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+@media print {
+  .resume-template--super-blue .section-header__title {
+    color: #fff !important;
+    background: var(--color-primary) !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}

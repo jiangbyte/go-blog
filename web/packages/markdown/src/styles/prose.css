@@ -1,0 +1,583 @@
+/* 文章正文增强组件 / 代码块 / mermaid 样式 */
+
+.prose-body .headerlink {
+  margin-left: 0.35em;
+  border-bottom: none !important;
+  opacity: 0;
+  color: var(--efu-secondtext);
+}
+.prose-body :is(h2, h3, h4, h5, h6):hover .headerlink {
+  opacity: 0.45;
+}
+
+/* 代码块工具栏与行号 */
+.prose-body .code-block {
+  margin: 1rem 0;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f6f8fa;
+}
+.prose-body .code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.85rem;
+  border-bottom: 1px solid var(--efu-card-border);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 0.75rem;
+  color: var(--efu-secondtext);
+}
+.prose-body .code-block__copy {
+  border: 1px solid var(--efu-card-border);
+  border-radius: 6px;
+  background: #fff;
+  padding: 0.15rem 0.55rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+.prose-body .code-block__viewport pre {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  background: transparent;
+  border-radius: 0;
+}
+.prose-body .code-block code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  line-height: 1.65;
+}
+.prose-body .code-block .line-no {
+  display: inline-block;
+  width: 2em;
+  margin-right: 0.75em;
+  color: #98a2b3;
+  user-select: none;
+}
+.prose-body .code-block .hl-line {
+  display: block;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+  background: rgba(250, 204, 21, 0.22);
+}
+
+/* Notes */
+.prose-body aside.md-tag.note {
+  display: flex;
+  gap: 0.65rem;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--efu-card-border);
+  background: var(--efu-secondbg);
+}
+.prose-body aside.md-tag.note.info,
+.prose-body aside.md-tag.note.blue {
+  border-color: rgba(23, 92, 211, 0.28);
+  background: rgba(23, 92, 211, 0.06);
+}
+.prose-body aside.md-tag.note.success,
+.prose-body aside.md-tag.note.green {
+  border-color: rgba(6, 118, 71, 0.28);
+  background: rgba(6, 118, 71, 0.06);
+}
+.prose-body aside.md-tag.note.warning {
+  border-color: rgba(181, 71, 8, 0.28);
+  background: rgba(181, 71, 8, 0.06);
+}
+.prose-body aside.md-tag.note.danger,
+.prose-body aside.md-tag.note.red {
+  border-color: rgba(180, 35, 24, 0.28);
+  background: rgba(180, 35, 24, 0.06);
+}
+.prose-body aside.md-tag.note .note-content > :first-child {
+  margin-top: 0;
+}
+.prose-body aside.md-tag.note .note-content > :last-child {
+  margin-bottom: 0;
+}
+
+/* Labels / spans / p */
+.prose-body .tag-label,
+.prose-body .tag-span {
+  display: inline-block;
+  margin: 0 0.15em;
+  padding: 0.1em 0.45em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  background: var(--efu-secondbg);
+}
+.prose-body .tag-label.red,
+.prose-body .tag-span.red,
+.prose-body .tag-p.red {
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+}
+.prose-body .tag-label.blue,
+.prose-body .tag-span.blue,
+.prose-body .tag-p.blue {
+  color: #175cd3;
+  background: rgba(23, 92, 211, 0.08);
+}
+.prose-body .tag-label.green,
+.prose-body .tag-span.green {
+  color: #067647;
+  background: rgba(6, 118, 71, 0.08);
+}
+.prose-body .tag-label.orange {
+  color: #b54708;
+  background: rgba(181, 71, 8, 0.08);
+}
+.prose-body .tag-label.purple {
+  color: #6941c6;
+  background: rgba(105, 65, 198, 0.08);
+}
+.prose-body .tag-p {
+  margin: 0.85rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+}
+
+.prose-body .tag-spoiler {
+  margin: 0 0.2em;
+  padding: 0 0.2em;
+  filter: blur(4px);
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+.prose-body .tag-spoiler:hover {
+  filter: none;
+}
+.prose-body .tag-bubble {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.3em;
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--efu-card-border);
+  background: var(--milk-glass-strong);
+  line-height: 1.35;
+  vertical-align: baseline;
+}
+
+/* Fold / details */
+.prose-body details.md-tag {
+  margin: 0.85rem 0;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 10px;
+  background: var(--efu-secondbg);
+}
+.prose-body details.tag-hide-inline {
+  display: inline-block;
+  margin: 0 0.2em;
+  padding: 0.1em 0.45em;
+  vertical-align: baseline;
+}
+
+/* Tabs */
+.prose-body .tag-tabs {
+  margin: 1rem 0;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.prose-body .tag-tabs .nav-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  background: var(--efu-secondbg);
+  border-bottom: 1px solid var(--efu-card-border);
+}
+.prose-body .tag-tabs .nav-tabs .tab button {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.prose-body .tag-tabs .nav-tabs .tab.active button {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(20, 24, 32, 0.06);
+  font-weight: 600;
+}
+.prose-body .tag-tabs .tab-item-content {
+  padding: 0.75rem 1rem;
+}
+.prose-body .tag-tabs .tab-item-content:not(.active) {
+  display: none;
+}
+
+/* Buttons */
+.prose-body .tag-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  margin: 0.25rem 0.35rem 0.25rem 0;
+  padding: 0 1rem;
+  border-radius: 8px;
+  background: var(--milk-ink);
+  color: #fff !important;
+  border-bottom: none !important;
+  font-size: 0.9rem;
+}
+.prose-body .tag-button.outline,
+.prose-body .tag-button.blue.outline {
+  background: transparent;
+  color: var(--milk-ink) !important;
+  border: 1px solid var(--efu-card-border);
+}
+.prose-body .tag-button.block {
+  display: flex;
+  width: 100%;
+}
+
+/* 链接卡 / 内容卡 / 仓库卡 */
+.prose-body .tag-link-card,
+.prose-body .tag-card,
+.prose-body .card_box,
+.prose-body .repo-card {
+  display: block;
+  margin: 0.85rem 0;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(44, 52, 68, 0.035);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.prose-body .tag-link-card:hover,
+.prose-body .tag-link-card:focus-within,
+.prose-body .tag-card:hover,
+.prose-body .tag-card:focus-within,
+.prose-body .card_box:hover,
+.prose-body .card_box:focus-within,
+.prose-body .repo-card:hover,
+.prose-body .repo-card:focus-within {
+  border-color: var(--efu-card-border);
+  box-shadow: 0 8px 22px rgba(44, 52, 68, 0.08);
+  transform: translateY(-1px);
+}
+.prose-body .tag-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-bottom: none !important;
+}
+.prose-body .tag-link-tips {
+  font-size: 0.75rem;
+  color: var(--efu-secondtext);
+  margin-bottom: 0.35rem;
+}
+.prose-body .tag-link-title {
+  font-weight: 700;
+}
+.prose-body .tag-link-sitename {
+  color: var(--efu-secondtext);
+  font-size: 0.9em;
+  margin-top: 0.2rem;
+}
+.prose-body .tag-card > a,
+.prose-body .card_box > a {
+  display: block;
+  border-bottom: none !important;
+  color: inherit;
+}
+.prose-body .tag-card .card_cover,
+.prose-body .card_box .card_cover {
+  height: 120px;
+  background-size: cover;
+  background-position: center;
+}
+.prose-body .tag-card .card_body,
+.prose-body .card_box .card_body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+}
+.prose-body .tag-card .card_tag,
+.prose-body .card_box .card_tag {
+  font-size: 0.75rem;
+  color: var(--efu-secondtext);
+}
+.prose-body .tag-card .card_title,
+.prose-body .card_box .card_title {
+  font-weight: 700;
+}
+.prose-body .repo-card {
+  padding: 0.9rem 1rem;
+}
+.prose-body .repo-title {
+  font-weight: 700;
+  border-bottom: none !important;
+}
+.prose-body .repo-title:hover {
+  opacity: 0.75;
+}
+.prose-body .repo-desc {
+  margin: 0.35rem 0 0;
+  color: var(--efu-secondtext);
+  font-size: 0.9em;
+}
+.prose-body .repo-provider {
+  font-size: 0.75rem;
+  color: var(--efu-secondtext);
+}
+
+/* 时间线：虚线轨与节点 */
+.prose-body .tag-timeline {
+  --tag-timeline-color: var(--efu-theme);
+  position: relative;
+  margin: 1rem 0;
+}
+.prose-body .tag-timeline .timeline-item,
+.prose-body .tag-timenode {
+  position: relative;
+  margin: 0 0 0 10px;
+  padding: 0 0 1.1rem 28px;
+  border-left: 1px dashed rgba(26, 24, 22, 0.22);
+}
+.prose-body .tag-timeline .timeline-item:last-child,
+.prose-body .tag-timenode:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+.prose-body .tag-timeline .timeline-item-title,
+.prose-body .tag-timenode .meta {
+  position: relative;
+  min-height: 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.prose-body .tag-timeline .timeline-item-title::before,
+.prose-body .tag-timenode .meta::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: -36px;
+  width: 12px;
+  height: 12px;
+  border: 3px solid var(--efu-card-bg, #fff);
+  border-radius: 50%;
+  background: var(--tag-timeline-color, var(--efu-theme));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tag-timeline-color, var(--efu-theme)) 22%, transparent);
+}
+.prose-body .tag-timeline .item-circle p,
+.prose-body .tag-timenode .meta p {
+  margin: 0;
+  color: var(--tag-timeline-color, var(--efu-theme));
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.prose-body .tag-timeline .timeline-item-content,
+.prose-body .tag-timeline .body,
+.prose-body .tag-timenode .body {
+  margin-top: 0.45rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 10px;
+  background: var(--efu-card-bg, #fff);
+  box-shadow: 0 4px 14px rgba(44, 52, 68, 0.035);
+  color: var(--efu-secondtext);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.prose-body .tag-timeline .timeline-item-content:hover,
+.prose-body .tag-timeline .body:hover,
+.prose-body .tag-timenode .body:hover {
+  border-color: var(--efu-card-border);
+  box-shadow: 0 8px 22px rgba(44, 52, 68, 0.08);
+  transform: translateY(-1px);
+}
+.prose-body .tag-timeline .body strong,
+.prose-body .tag-timenode .body strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--milk-ink);
+}
+
+/* Mermaid / chart */
+.prose-body .tag-mermaid,
+.prose-body .mermaid {
+  margin: 1rem 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
+.prose-body .chartjs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  padding: 0.75rem;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 12px;
+  background: #fff;
+  max-width: min(100%, 540px);
+}
+.prose-body .chartjs-container .chartjs-wrap {
+  width: 100%;
+  margin: 0 auto;
+}
+.prose-body .chartjs-desc {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--efu-secondtext);
+  text-align: center;
+}
+
+/* KaTeX block: no height clamp, no vertical scrollbar */
+.prose-body .katex-block {
+  margin: 1rem 0;
+  max-height: none !important;
+  height: auto !important;
+  overflow-x: auto;
+  overflow-y: visible !important;
+  padding: 0.35rem 0;
+  text-align: center;
+}
+.prose-body .katex-block .katex-display,
+.prose-body .katex-display {
+  margin: 0;
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+  text-align: center;
+}
+.prose-body .katex-block .katex,
+.prose-body .katex-display > .katex {
+  max-height: none !important;
+  overflow: visible !important;
+  white-space: normal;
+}
+
+/* ABC score sheet */
+.prose-body .abc-music-sheet,
+.prose-body .tag-score {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--efu-card-border);
+  border-radius: 12px;
+  background: #fff;
+  overflow-x: auto;
+  max-height: none;
+}
+.prose-body .abc-music-sheet svg {
+  max-width: 100%;
+  height: auto;
+}
+.prose-body .tag-typeit {
+  margin: 1rem 0;
+  min-height: 1.5em;
+  font-weight: 600;
+}
+
+/* Footnotes — academic / paper style (aligned with Hugo custom.css) */
+.prose-body sup.footnote-ref,
+.prose-body a.footnote-ref {
+  color: var(--milk-ink) !important;
+  background: none !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  font-size: 0.85em !important;
+  font-weight: 600 !important;
+  font-variant-numeric: lining-nums;
+  vertical-align: super !important;
+  line-height: 0 !important;
+  margin-left: 0.06em;
+  padding: 0 !important;
+}
+.prose-body a.footnote-ref:hover,
+.prose-body a.footnote-ref:focus-visible {
+  opacity: 0.65;
+  border-bottom: 0 !important;
+  text-decoration: none !important;
+}
+
+.prose-body .footnotes {
+  margin-top: 2.75rem;
+  padding-top: 0;
+  border-top: 0;
+  font-size: 0.875em;
+  line-height: 1.7;
+  color: var(--milk-ink-soft, var(--efu-secondtext));
+}
+
+/* Short rule like print papers */
+.prose-body hr.footnotes-sep,
+.prose-body .footnotes > hr {
+  display: block !important;
+  width: 7.5rem;
+  max-width: 30%;
+  margin: 0 0 0.85rem;
+  border: 0;
+  border-top: 1px solid rgba(26, 24, 22, 0.32);
+  background: none;
+}
+
+/* Plain 1. 2. — kill circular badges / Tailwind list reset */
+.prose-body .footnotes ol,
+.prose-body .footnotes ol.footnotes-list {
+  list-style: decimal !important;
+  list-style-position: outside !important;
+  padding-left: 1.6em !important;
+  margin: 0 !important;
+  counter-reset: none !important;
+}
+
+.prose-body .footnotes ol > li,
+.prose-body .footnotes ol > li.footnote-item {
+  position: static !important;
+  display: list-item !important;
+  list-style: decimal !important;
+  flex-wrap: unset !important;
+  column-gap: unset !important;
+  row-gap: unset !important;
+  padding: 0.15em 0 0.5em !important;
+  margin: 0 !important;
+  line-height: 1.7;
+  color: inherit;
+}
+
+.prose-body .footnotes ol > li::before,
+.prose-body .footnotes ol > li.footnote-item::before {
+  content: none !important;
+  display: none !important;
+}
+
+.prose-body .footnotes ol > li > p {
+  margin: 0 !important;
+  display: inline;
+}
+
+.prose-body .footnotes .footnote-backref {
+  color: rgba(26, 24, 22, 0.42) !important;
+  text-decoration: none !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+  font-size: 0.9em !important;
+  margin-left: 0.15em;
+  vertical-align: baseline !important;
+}
+.prose-body .footnotes .footnote-backref:hover {
+  color: var(--milk-ink) !important;
+  opacity: 0.7;
+}

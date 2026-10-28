@@ -1,0 +1,4 @@
+# HTTP only（本机 IP / 未配置 SITE_DOMAIN）
+:80 {
+	import app
+}

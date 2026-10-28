@@ -1,0 +1,101 @@
+/* Author: go-blog — 预览/PDF 纸面补丁（对齐 mypage resume_html） */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+.resume-page {
+  box-shadow: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+  background: #fff !important;
+  padding: 0 !important;
+  display: block !important;
+}
+.resume-sheet {
+  box-shadow: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+  background: #fff !important;
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+.resume-body {
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  box-sizing: border-box;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+table.entry-header {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0 0 var(--entry-gap, 10px);
+}
+table.entry-header col.entry-header__col-title { width: 42%; }
+table.entry-header col.entry-header__col-role { width: 28%; }
+table.entry-header col.entry-header__col-period { width: 30%; }
+table.entry-header td {
+  vertical-align: baseline;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+table.entry-header td.entry-header__title {
+  text-align: left !important;
+  font-weight: 700 !important;
+  color: #222 !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+table.entry-header td.entry-header__role {
+  text-align: left !important;
+  font-weight: 700 !important;
+  color: #222 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  padding-left: 0.4em !important;
+  padding-right: 0.4em !important;
+}
+table.entry-header td.entry-header__period {
+  text-align: right !important;
+  font-weight: 400 !important;
+  color: #888 !important;
+  white-space: nowrap !important;
+}
+.resume-section__content ol,
+.resume-entry__body ol {
+  list-style-type: decimal;
+  padding-left: 1.4em;
+  margin: 0 0 0.35em;
+}
+.resume-section__content ol > li,
+.resume-entry__body ol > li {
+  list-style: decimal;
+  display: list-item;
+}
+.resume-section__content ul,
+.resume-entry__body ul {
+  list-style-type: disc;
+  padding-left: 1.4em;
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 12mm 14mm 12mm;
+  }
+  .resume-page,
+  .resume-sheet {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  .resume-body {
+    padding: 0 !important;
+  }
+}

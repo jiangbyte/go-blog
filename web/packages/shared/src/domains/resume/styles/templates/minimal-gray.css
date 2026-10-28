@@ -1,0 +1,20 @@
+/** Author: go-blog — 模板 minimal-gray：浅灰通栏标题条 */
+
+.resume-template--minimal-gray .section-header {
+  background: #e8eaee;
+  padding: 7px 12px;
+  border-radius: 2px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.resume-template--minimal-gray .section-header__icon,
+.resume-template--minimal-gray .section-header__line {
+  display: none;
+}
+
+.resume-template--minimal-gray .section-header__title {
+  color: #111;
+  font-size: calc(14px * var(--font-scale, 1));
+  letter-spacing: 0.04em;
+}

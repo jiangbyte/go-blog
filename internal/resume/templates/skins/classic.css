@@ -1,0 +1,27 @@
+/** Author: go-blog — 模板 classic：左侧短竖条强调（不显示图标本体） */
+
+.resume-template--classic .section-header__icon {
+  width: 4px;
+  height: 1em;
+  min-width: 4px;
+  max-width: 4px;
+  border-radius: 1px;
+  background: var(--color-primary);
+  color: transparent;
+  overflow: hidden;
+  /* 覆盖基座圆形图标尺寸，避免竖条被撑开 */
+  padding: 0;
+}
+
+/* 图标 SVG 带 inline display，必须 !important 才能藏干净，否则挤在 4px 竖条里发白线 */
+.resume-template--classic .section-header__icon > * {
+  display: none !important;
+}
+
+.resume-template--classic .section-header__title {
+  color: #111;
+}
+
+.resume-template--classic .section-header__line {
+  display: none;
+}

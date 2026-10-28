@@ -1,0 +1,28 @@
+/** Author: go-blog — Admin 内嵌预览 / 缩略图宿主 */
+
+/* Admin 内嵌预览：去掉全页背景与 min-height */
+.resume-page--embedded {
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  display: block;
+}
+
+.resume-page--embedded .resume-sheet {
+  width: 210mm;
+  max-width: none;
+}
+
+/* 缩略图宿主：裁切并缩放；纸面用白底，由外层 NCard 提供边框阴影 */
+.resume-thumb {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.resume-thumb__scaler {
+  transform-origin: top left;
+  pointer-events: none;
+  user-select: none;
+}

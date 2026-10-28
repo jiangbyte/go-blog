@@ -1,0 +1,31 @@
+/** Author: go-blog — 模板 orange-simple：圆形图标 + 主题色标题 + 横线 */
+
+/* 锁定为「图标圆点 + 标题 + 延伸横线」，与基座一致，防止被其它规则冲掉 */
+.resume-template--orange-simple .section-header__icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.resume-template--orange-simple .section-header__icon svg {
+  display: block;
+  width: 11px;
+  height: 11px;
+}
+
+.resume-template--orange-simple .section-header__title {
+  color: var(--color-primary);
+  font-size: calc(14px * var(--font-scale, 1));
+}
+
+.resume-template--orange-simple .section-header__line {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: var(--color-primary);
+  opacity: 0.95;
+  min-width: 12px;
+}

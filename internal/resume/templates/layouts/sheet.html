@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="{{.CSP}}" />
+<title>{{.Name}}</title>
+{{if .FontLink}}<link rel="stylesheet" href="{{.FontLink}}" crossorigin="anonymous" />{{end}}
+<style>{{.BaseCSS}}</style>
+<style>{{.ThemeVarsCSS}}</style>
+{{if .CustomCSS}}<style>{{.CustomCSS}}</style>{{end}}
+</head>
+<body>
+<div class="resume-page resume-layout--{{.Layout}} resume-template--{{.TemplateID}}" data-resume-root>
+  <article class="resume-sheet">
+    <div class="resume-body">
+      <header class="resume-header">
+        <div class="resume-header__main">
+          <h1 class="resume-name">{{.Name}}</h1>
+          {{if .ContactsHTML}}{{.ContactsHTML}}{{end}}
+        </div>
+        {{if .AvatarURL}}
+        <img class="resume-avatar" src="{{.AvatarURL}}" alt="" width="92" height="118" />
+        {{end}}
+      </header>
+      {{range .Sections}}
+      <section class="resume-section">
+        <div class="section-header">
+          <span class="section-header__icon" aria-hidden="true">{{.IconSVG}}</span>
+          <h2 class="section-header__title">{{.Title}}</h2>
+          <span class="section-header__line"></span>
+        </div>
+        <div class="resume-section__content resume-md">
+          {{if .EduHeader}}{{.EduHeader}}{{end}}
+          {{range .Entries}}
+          <div class="resume-entry">
+            {{.HeaderHTML}}
+            {{if .TagsHTML}}{{.TagsHTML}}{{end}}
+            {{if .BodyHTML}}<div class="resume-entry__body">{{.BodyHTML}}</div>{{end}}
+          </div>
+          {{end}}
+          {{if .BodyHTML}}{{.BodyHTML}}{{end}}
+        </div>
+      </section>
+      {{end}}
+    </div>
+  </article>
+</div>
+</body>
+</html>

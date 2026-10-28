@@ -1,0 +1,30 @@
+# 图床域名：Caddy 终止 HTTPS（Let’s Encrypt），回源七牛 HTTP CDN
+# 七牛控制台保持「HTTPS 配置 = 关」，不产生七牛 HTTPS 用量
+# 注意：勿把客户端的 X-Forwarded-Proto=https 传给七牛，否则会返回 httpsDisabled
+# CORS：浏览器直连图床（canvas / fetch）需要 ACAO；resume 预览优先走 API ?stream=1
+{$IMAGE_DOMAIN} {
+	encode gzip
+
+	@cors_preflight method OPTIONS
+	handle @cors_preflight {
+		header Access-Control-Allow-Origin *
+		header Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+		header Access-Control-Allow-Headers *
+		header Access-Control-Max-Age 86400
+		respond 204
+	}
+
+	header Access-Control-Allow-Origin *
+	header Access-Control-Expose-Headers "Content-Length, Content-Type, Content-Disposition"
+
+	reverse_proxy http://{$IMAGE_UPSTREAM} {
+		header_up Host {$IMAGE_DOMAIN}
+		header_up X-Forwarded-Proto "http"
+		header_up X-Forwarded-For {http.request.remote.host}
+		header_up -X-Forwarded-Host
+		transport http {
+			read_timeout 120s
+			write_timeout 120s
+		}
+	}
+}

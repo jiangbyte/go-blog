@@ -1,0 +1,933 @@
+/** Author: go-blog — 简历纸面共用基座（结构/排版，不含具体模板） */
+
+/* —— Section header —— */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.section-header__icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-header__icon svg {
+  display: block;
+  width: 11px;
+  height: 11px;
+}
+
+.section-header__title {
+  margin: 0;
+  font-size: calc(14px * var(--font-scale, 1));
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.section-header__line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-primary);
+  opacity: 0.95;
+  min-width: 12px;
+  align-self: center;
+}
+
+/* —— Page shell —— */
+.resume-page {
+  --resume-bg: #e9eef5;
+  --entry-gap: 10px;
+  --section-content-gap: 6px;
+  --resume-toolbar-h: 52px;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      ellipse 90% 50% at 50% -10%,
+      color-mix(in srgb, var(--color-primary) 16%, transparent),
+      transparent 55%
+    ),
+    var(--resume-bg);
+  padding: calc(var(--resume-toolbar-h) + 1.5rem) 1rem 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+/* Portal/公开页顶栏：对齐 Admin 预览条，直角 */
+.resume-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  height: var(--resume-toolbar-h);
+  background: #fff;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  box-sizing: border-box;
+}
+
+.resume-toolbar__inner {
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.resume-toolbar__left,
+.resume-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.resume-toolbar__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resume-toolbar__print {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.resume-print-tip {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  z-index: 31;
+  width: max-content;
+  max-width: 12.5rem;
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-2px);
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease,
+    transform 0.15s ease;
+}
+
+.resume-toolbar__print:hover .resume-print-tip,
+.resume-toolbar__print:focus-within .resume-print-tip,
+.resume-print-tip.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.resume-print-tip strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* —— Sheet (A4) —— */
+.resume-sheet {
+  width: min(100%, 210mm);
+  min-height: 297mm;
+  margin: 0;
+  background: #fff;
+  color: #222;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 18px 50px rgba(15, 23, 42, 0.1);
+  position: relative;
+  overflow: hidden;
+  font-size: calc(12.5px * var(--font-scale, 1));
+  line-height: var(--line-height, 1.55);
+  font-family: var(--font-family, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif);
+  box-sizing: border-box;
+}
+
+.resume-body {
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+}
+
+/* —— Header —— */
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.resume-header__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+.resume-name {
+  margin: 0 0 8px;
+  font-size: calc(26px * var(--font-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  color: #111;
+}
+
+/* 提高选择器优先级，避免宿主（如 Naive .n-card-cover img { width:100% }）把头像撑成横幅 */
+.resume-sheet img.resume-avatar {
+  display: block;
+  width: 82px;
+  max-width: 82px;
+  height: 106px;
+  object-fit: cover;
+  border-radius: 0;
+  flex-shrink: 0;
+  background: #e8eef5;
+}
+
+/* layout modes */
+.resume-layout--center .resume-header {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.resume-layout--center .resume-header__main {
+  width: 100%;
+}
+
+.resume-layout--center .resume-contacts__row {
+  justify-content: center;
+}
+
+.resume-layout--center .resume-sheet img.resume-avatar {
+  order: -1;
+  margin-bottom: 2px;
+}
+
+.resume-layout--tiled .resume-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+/* —— Contacts：按行排布，| 只在行内项之间 —— */
+.resume-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  color: #333;
+  font-size: calc(12px * var(--font-scale, 1));
+  line-height: 1.45;
+}
+
+.resume-contacts__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  row-gap: 4px;
+}
+
+.resume-contacts__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  max-width: 100%;
+  /* 禁止邮箱/URL 单词中部断开（anywhere 会导致 admin@example.co\nm） */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+.resume-contacts__icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.resume-contacts .label {
+  color: #666;
+  flex-shrink: 0;
+}
+
+.resume-contacts--plain .label {
+  display: none;
+}
+
+.resume-contacts--icon .label {
+  display: none;
+}
+
+.resume-contacts--icon .resume-contacts__icon {
+  margin-right: 2px;
+}
+
+.resume-contacts .sep {
+  color: #c8c8c8;
+  margin: 0 6px;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.resume-contacts a {
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.resume-contacts a:hover {
+  color: var(--color-primary);
+}
+
+/* —— Sections (PDF-like vertical rhythm) —— */
+.resume-section {
+  margin-top: 0;
+}
+
+.resume-section + .resume-section {
+  margin-top: var(--space-module);
+}
+
+.resume-section__content {
+  margin-top: var(--section-content-gap);
+}
+
+/* Kill global.md-ish margins inside resume — keep readable text leading */
+.resume-section__content :is(p, ul, ol),
+.resume-entry__body :is(p, ul, ol) {
+  margin: 0 0 0.35em;
+  line-height: var(--line-height, 1.55);
+}
+
+.resume-section__content :is(li),
+.resume-entry__body :is(li) {
+  margin: 0 0 0.28em;
+  padding-left: 1px;
+  line-height: var(--line-height, 1.55);
+}
+
+.resume-html-body,
+.resume-entry__body,
+.resume-section__content.resume-md {
+  line-height: var(--line-height, 1.55);
+}
+
+.resume-section__content :is(ul, ol),
+.resume-entry__body :is(ul, ol) {
+  padding-left: 1.2em;
+}
+
+.resume-section__content ul,
+.resume-entry__body ul {
+  list-style: disc;
+}
+
+.resume-section__content li,
+.resume-entry__body li {
+  margin: 0 0 0.28em;
+  padding-left: 1px;
+  line-height: var(--line-height, 1.55);
+}
+
+.resume-section__content li:last-child,
+.resume-entry__body li:last-child {
+  margin-bottom: 0;
+}
+
+.resume-section__content strong,
+.resume-entry__body strong {
+  font-weight: 700;
+}
+
+/* Entry headers (school / company / project) */
+/* 仅 div（Vue 纸面）：flex + 职位绝对居中；table 由后端 PDF/预览专用，勿套 flex */
+div.entry-header,
+.resume-md .entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+  margin: 0 0 3px;
+  font-size: inherit;
+  line-height: 1.35;
+  min-height: 1.35em;
+}
+
+.resume-md .entry-head + :is(ol, ul),
+.resume-entry .entry-header + .resume-entry__body {
+  margin-top: 2px;
+}
+
+div.entry-header > .entry-header__title,
+.resume-md .entry-head__title {
+  flex: 1 1 0;
+  min-width: 0;
+  font-weight: 700;
+  color: #222;
+  text-align: left;
+  padding-right: 0.35rem;
+  overflow-wrap: anywhere;
+}
+
+div.entry-header > .entry-header__role,
+.resume-md .entry-head__role {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 42%;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+div.entry-header > .entry-header__period,
+.resume-md .entry-head__period {
+  flex: 1 1 0;
+  min-width: 0;
+  color: #888;
+  white-space: nowrap;
+  text-align: right;
+  font-weight: 400;
+  padding-left: 0.35rem;
+}
+
+/* 后端 table 纸面：固定三列，勿被上方 flex 规则污染 */
+table.entry-header {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0 0 3px;
+  font-size: inherit;
+  line-height: 1.35;
+}
+table.entry-header col.entry-header__col-title {
+  width: 40%;
+}
+table.entry-header col.entry-header__col-role {
+  width: 26%;
+}
+table.entry-header col.entry-header__col-period {
+  width: 34%;
+}
+table.entry-header tr {
+  display: table-row;
+}
+table.entry-header td {
+  display: table-cell;
+  vertical-align: baseline;
+  padding: 0;
+  border: 0;
+}
+table.entry-header td.entry-header__title {
+  text-align: left;
+  font-weight: 700;
+  color: #222;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+table.entry-header td.entry-header__role {
+  text-align: left;
+  font-weight: 700;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.4em;
+  position: static;
+  left: auto;
+  transform: none;
+  max-width: none;
+  pointer-events: auto;
+}
+table.entry-header td.entry-header__period {
+  text-align: right;
+  color: #888;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+/* Multiple entries (experience / projects) */
+.resume-entry {
+  margin: 0 0 var(--entry-gap);
+}
+
+.resume-entry:last-child {
+  margin-bottom: 0;
+}
+
+.resume-entry__body {
+  margin-top: 1px;
+}
+
+/* Internships: entry-head blocks from raw HTML in md */
+.resume-md .entry-head {
+  margin-top: var(--entry-gap);
+}
+
+.resume-md .entry-head:first-child {
+  margin-top: 0;
+}
+
+.resume-md .entry-head + ol {
+  margin-bottom: 0;
+}
+
+/* —— Tablet —— */
+@media (max-width: 860px) {
+  .resume-md .entry-head,
+  div.entry-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'title period'
+      'role role';
+    gap: 1px 10px;
+    position: static;
+  }
+
+  .resume-md .entry-head__title,
+  div.entry-header > .entry-header__title {
+    grid-area: title;
+    flex: unset;
+    padding-right: 0;
+  }
+
+  .resume-md .entry-head__role,
+  div.entry-header > .entry-header__role {
+    grid-area: role;
+    position: static;
+    left: auto;
+    transform: none;
+    max-width: none;
+    text-align: left;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.96em;
+    white-space: normal;
+    pointer-events: auto;
+    overflow: visible;
+  }
+
+  .resume-md .entry-head__period,
+  div.entry-header > .entry-header__period {
+    grid-area: period;
+    flex: unset;
+    padding-left: 0;
+    text-align: right;
+  }
+
+  /* 后端 table 预览宽度常 <860px，禁止被上面的 grid 打散成「三列挤右侧」 */
+  table.entry-header {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+  table.entry-header tr {
+    display: table-row !important;
+  }
+  table.entry-header td {
+    display: table-cell !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    grid-area: unset !important;
+  }
+}
+
+/* —— Mobile —— */
+@media (max-width: 640px) {
+  .resume-page {
+    --entry-gap: 12px;
+    --section-content-gap: 8px;
+    padding: calc(var(--resume-toolbar-h) + 0.75rem) 0
+      calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    background: #fff;
+  }
+
+  .resume-toolbar__inner {
+    padding: 0 8px;
+    gap: 8px;
+  }
+
+  .resume-print-tip {
+    top: auto;
+    bottom: calc(100% + 0.45rem);
+    right: 0;
+    left: auto;
+    transform: translateY(2px);
+  }
+
+  .resume-toolbar__print:hover .resume-print-tip,
+  .resume-toolbar__print:focus-within .resume-print-tip,
+  .resume-print-tip.is-visible {
+    transform: translateY(0);
+  }
+
+  .resume-sheet {
+    width: 100%;
+    max-width: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: 13px;
+  }
+
+  .resume-body {
+    padding: 20px 16px 28px;
+  }
+
+  .resume-header {
+    /* 移动端：头像一行、姓名一行，均居中；信息在下方换行 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .resume-header__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .resume-name {
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    margin: 0;
+    text-align: center;
+  }
+
+  .resume-sheet img.resume-avatar {
+    order: -1;
+    width: 64px;
+    max-width: 64px;
+    height: 82px;
+    margin: 0 auto;
+  }
+
+  .resume-contacts {
+    font-size: 12px;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .resume-contacts__row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2px 0;
+  }
+
+  .resume-contacts .sep {
+    display: inline;
+  }
+
+  .resume-layout--center .resume-header {
+    align-items: center;
+    text-align: center;
+  }
+
+  .resume-layout--center .resume-sheet img.resume-avatar {
+    order: -1;
+    margin-bottom: 0;
+  }
+
+  .resume-layout--center .resume-contacts__row {
+    justify-content: center;
+  }
+
+  .resume-layout--tiled .resume-header {
+    display: flex;
+  }
+
+  .section-header {
+    gap: 6px;
+  }
+
+  .section-header__title {
+    font-size: 13.5px;
+  }
+
+  .section-header__icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  .resume-md .entry-head,
+  div.entry-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'title'
+      'role'
+      'period';
+    gap: 1px;
+    position: static;
+  }
+
+  .resume-md .entry-head__period,
+  div.entry-header > .entry-header__period {
+    text-align: left;
+    white-space: normal;
+  }
+
+  table.entry-header {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+  table.entry-header tr {
+    display: table-row !important;
+  }
+  table.entry-header td {
+    display: table-cell !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    grid-area: unset !important;
+  }
+
+  .resume-section__content :is(ul, ol),
+  .resume-entry__body :is(ul, ol) {
+    padding-left: 1.15em;
+  }
+
+  .resume-section + .resume-section {
+    margin-top: var(--space-module);
+  }
+}
+
+/* —— Print —— */
+@media print {
+  /*
+   * 每页边距必须用 @page，不能只靠 .resume-body padding：
+   * padding 只作用在首/末，跨页断点处会贴边。
+   */
+  @page {
+    size: A4;
+    margin: 14mm 13mm 16mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  .resume-page {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+    display: block !important;
+  }
+
+  .resume-toolbar,
+  .resume-float {
+    display: none !important;
+  }
+
+  .resume-print-tip {
+    display: none !important;
+  }
+
+  .resume-sheet {
+    width: auto !important;
+    max-width: none !important;
+    min-height: auto !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    font-size: 12.5px !important;
+  }
+
+  /* 顶条已移除 */
+
+  .section-header__icon {
+    background: var(--color-primary) !important;
+    color: #fff !important;
+  }
+
+  .section-header__title {
+    color: var(--color-primary) !important;
+    background: transparent !important;
+  }
+
+  /* 深色底/色块标题的 print 覆盖写在各自皮肤 CSS，勿在此按模板 id 堆特例 */
+
+  .section-header__line {
+    background: var(--color-primary) !important;
+  }
+
+  /* 边距交给 @page */
+  .resume-body {
+    padding: 0 !important;
+  }
+
+  .resume-header {
+    display: flex !important;
+    margin-bottom: 12px !important;
+  }
+
+  .resume-header__main {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .resume-name {
+    display: block !important;
+    visibility: visible !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    color: #111 !important;
+    margin: 0 0 8px !important;
+  }
+
+  .resume-contacts__icon {
+    color: var(--color-primary) !important;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .resume-sheet img.resume-avatar {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* 纸面/PDF：table 三列；div 缩略仍可用 table-cell 模拟 */
+  .resume-md .entry-head,
+  div.entry-header,
+  table.entry-header {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    position: static !important;
+  }
+
+  table.entry-header tr,
+  .resume-md .entry-head,
+  div.entry-header {
+    /* tr 保持 table-row；div 整体已是 table */
+  }
+
+  table.entry-header tr {
+    display: table-row !important;
+  }
+
+  .resume-md .entry-head__title,
+  .resume-md .entry-head__role,
+  .resume-md .entry-head__period,
+  div.entry-header > .entry-header__title,
+  div.entry-header > .entry-header__role,
+  div.entry-header > .entry-header__period,
+  table.entry-header td.entry-header__title,
+  table.entry-header td.entry-header__role,
+  table.entry-header td.entry-header__period {
+    display: table-cell !important;
+    vertical-align: baseline !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    max-width: none !important;
+    float: none !important;
+  }
+
+  .resume-md .entry-head__title,
+  div.entry-header > .entry-header__title,
+  table.entry-header td.entry-header__title,
+  table.entry-header col.entry-header__col-title {
+    width: 40% !important;
+    text-align: left !important;
+    font-weight: 700 !important;
+  }
+
+  .resume-md .entry-head__role,
+  div.entry-header > .entry-header__role,
+  table.entry-header td.entry-header__role,
+  table.entry-header col.entry-header__col-role {
+    width: 26% !important;
+    text-align: left !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding-left: 0.4em !important;
+    padding-right: 0.4em !important;
+  }
+
+  .resume-md .entry-head__period,
+  div.entry-header > .entry-header__period,
+  table.entry-header td.entry-header__period,
+  table.entry-header col.entry-header__col-period {
+    width: 34% !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    color: #888 !important;
+    font-weight: 400 !important;
+  }
+}

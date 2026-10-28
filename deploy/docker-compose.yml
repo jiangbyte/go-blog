@@ -1,0 +1,83 @@
+# go-blog 生产编排：blog + admin + resume + api + gateway(Caddy)
+# 基础设施：本机 / 外置 MySQL、Redis；对象存储默认七牛（见 .env）
+#
+# 用法（在 deploy/ 目录）：
+#   cp .env.example .env   # 填七牛等密钥
+#   docker compose up -d --build
+# 或仓库根：make docker-up
+#
+# 本地入口：http://127.0.0.1:${GATEWAY_HTTP_PORT:-8088}
+# 正式站：设 SITE_DOMAIN=example.com，映射 80/443，Caddy 自动申请证书
+
+name: go-blog
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/docker/api/Dockerfile
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Chromium 无头渲染：放大 /dev/shm，避免默认 64MB 导致崩
+    shm_size: "256mb"
+    ports:
+      # 仅本机可达，供调试；对外统一走 gateway
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - api_data:/app/data
+    restart: unless-stopped
+
+  blog:
+    build:
+      context: ..
+      dockerfile: deploy/docker/blog/Dockerfile
+      network: host
+    restart: unless-stopped
+
+  admin:
+    build:
+      context: ..
+      dockerfile: deploy/docker/admin/Dockerfile
+      network: host
+      args:
+        VITE_BASE_URL: /admin/
+        VITE_API_URL: /api
+    restart: unless-stopped
+
+  resume:
+    build:
+      context: ..
+      dockerfile: deploy/docker/resume/Dockerfile
+      network: host
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: ./docker/gateway
+      dockerfile: Dockerfile
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:-}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+      # 图床：Caddy 签 HTTPS，回源七牛 HTTP（七牛控制台 HTTPS 保持关）
+      IMAGE_DOMAIN: ${IMAGE_DOMAIN:-}
+      IMAGE_UPSTREAM: ${IMAGE_UPSTREAM:-}
+      RESUME_DOMAIN: ${RESUME_DOMAIN:-}
+    ports:
+      - "${GATEWAY_HTTP_PORT:-8088}:80"
+      - "${GATEWAY_HTTPS_PORT:-8443}:443"
+    volumes:
+      - gateway_caddy_data:/data
+      - gateway_caddy_config:/config
+    depends_on:
+      - api
+      - blog
+      - admin
+      - resume
+    restart: unless-stopped
+
+volumes:
+  api_data:
+  gateway_caddy_data:
+  gateway_caddy_config:

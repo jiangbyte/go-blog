@@ -1,0 +1,35 @@
+/** Author: go-blog — 模板 dark-tech：深色通栏标题条 */
+
+.resume-template--dark-tech .section-header {
+  background: #1f2937;
+  padding: 7px 12px;
+  border-radius: 2px;
+  gap: 8px;
+  /* PDF/打印需保留底色，否则白字会叠在白底上 */
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.resume-template--dark-tech .section-header__icon {
+  display: none;
+}
+
+.resume-template--dark-tech .section-header__title {
+  /* 盖过基座/打印里的 primary !important，深底必须白字 */
+  color: #fff !important;
+}
+
+.resume-template--dark-tech .section-header__line {
+  display: none;
+}
+
+@media print {
+  .resume-template--dark-tech .section-header {
+    background: #1f2937 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+  .resume-template--dark-tech .section-header__title {
+    color: #fff !important;
+  }
+}

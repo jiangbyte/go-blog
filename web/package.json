@@ -1,0 +1,17 @@
+{
+  "name": "go-blog-web",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "dev:blog": "pnpm --filter @jiangbyte/blog dev",
+    "dev:admin": "pnpm --filter @jiangbyte/admin dev",
+    "dev:resume": "pnpm --filter @jiangbyte/resume dev",
+    "build": "pnpm -r run build",
+    "build:blog": "pnpm --filter @jiangbyte/blog build",
+    "build:admin": "pnpm --filter @jiangbyte/admin build",
+    "build:resume": "pnpm --filter @jiangbyte/resume build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

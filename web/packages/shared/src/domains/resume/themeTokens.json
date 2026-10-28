@@ -1,0 +1,27 @@
+{
+  "colors": {
+    "blue": "#3b82f6",
+    "orange": "#f97316",
+    "green": "#22c55e",
+    "purple": "#a855f7",
+    "red": "#ef4444",
+    "cyan": "#06b6d4",
+    "gray": "#6b7280",
+    "black": "#1f2937"
+  },
+  "fontStacks": {
+    "default": "\"PingFang SC\", \"Microsoft YaHei\", \"Noto Sans SC\", sans-serif",
+    "source-sans": "\"Noto Sans SC\", \"Source Han Sans SC\", \"PingFang SC\", sans-serif",
+    "source-serif": "\"Noto Serif SC\", \"Source Han Serif SC\", \"Songti SC\", serif",
+    "wenkai": "\"LXGW WenKai\", \"KaiTi\", \"STKaiti\", serif",
+    "inter-sans": "Inter, \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif"
+  },
+  "fontCdns": {
+    "source-sans": "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5.2.5/chinese-simplified-400.css",
+    "source-serif": "https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@5.2.5/chinese-simplified-400.css",
+    "wenkai": "https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css",
+    "inter-sans": "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.2.5/400.css"
+  },
+  "layouts": ["left", "center", "tiled"],
+  "infoDisplays": ["text", "icon", "plain"]
+}

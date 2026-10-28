@@ -1,0 +1,21 @@
+/** Author: go-blog — 模板 classic：左侧短竖条强调 */
+
+.resume-template--classic .section-header__icon {
+  width: 4px;
+  height: 1em;
+  border-radius: 1px;
+  background: var(--color-primary);
+  color: transparent;
+}
+
+.resume-template--classic .section-header__icon svg {
+  display: none;
+}
+
+.resume-template--classic .section-header__title {
+  color: #111;
+}
+
+.resume-template--classic .section-header__line {
+  display: none;
+}

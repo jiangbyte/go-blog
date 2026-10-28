@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>jb-md 登录</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #fff;
+      --text: #1f2329;
+      --muted: #646a73;
+      --border: #dee0e3;
+      --accent: #1f8f7f;
+      --accent-soft: #d2f4ef;
+      --danger: #d14343;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(160deg, #eef3f6 0%, #f7f4ef 55%, #e8f1ee 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px 24px;
+      box-shadow: 0 12px 40px rgba(31, 35, 41, 0.08);
+    }
+    h1 { margin: 0 0 6px; font-size: 22px; font-weight: 650; }
+    .sub { margin: 0 0 20px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    label { display: block; font-size: 13px; margin: 0 0 6px; color: var(--muted); }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 12px;
+      font-size: 14px;
+      margin-bottom: 14px;
+      outline: none;
+      background: #fafbfc;
+    }
+    input:focus { border-color: var(--accent); background: #fff; }
+    .captcha-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+      background: #fafbfc;
+    }
+    .captcha-stage {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto 10px;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #e8ecef;
+      user-select: none;
+    }
+    .captcha-stage img.bg { display: block; width: 100%; height: auto; }
+    .captcha-stage .puzzle {
+      position: absolute;
+      left: 0;
+      width: 60px;
+      height: 60px;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.35));
+    }
+    .track {
+      position: relative;
+      height: 40px;
+      border-radius: 20px;
+      background: #eef1f4;
+      border: 1px solid var(--border);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .track-tip {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+    .knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--border);
+      cursor: grab;
+      box-shadow: 0 2px 6px rgba(0,0,0,.12);
+      z-index: 1;
+    }
+    .knob:active { cursor: grabbing; }
+    .captcha-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .linkish {
+      border: 0;
+      background: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 0;
+    }
+    .passed {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      border-radius: 8px;
+      border: 1px solid #52ccba;
+      background: var(--accent-soft);
+      color: #1f8f7f;
+      font-size: 14px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .passed.show { display: flex; }
+    .captcha-box.hide { display: none; }
+    button.submit {
+      width: 100%;
+      height: 42px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.submit:disabled { opacity: .55; cursor: not-allowed; }
+    .err {
+      min-height: 20px;
+      margin: 10px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+    .ok { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>jb-md 登录</h1>
+    <p class="sub">完成滑块验证后登录；凭证写入本机，供 <code>jb-md upload</code> 使用。<br />API：<span id="apiBaseLabel"></span></p>
+    <form id="form">
+      <label for="username">用户名</label>
+      <input id="username" type="text" autocomplete="username" required />
+      <label for="password">密码</label>
+      <input id="password" type="password" autocomplete="current-password" required />
+
+      <button type="button" id="passedBtn" class="passed">验证通过，点击可重验</button>
+      <div id="captchaBox" class="captcha-box">
+        <div class="captcha-stage" id="stage">
+          <img class="bg" id="bgImg" alt="captcha background" />
+          <img class="puzzle" id="puzzleImg" alt="puzzle" />
+        </div>
+        <div class="track" id="track">
+          <div class="track-tip">拖动滑块完成拼图</div>
+          <div class="knob" id="knob"></div>
+        </div>
+        <div class="captcha-actions">
+          <span id="captchaHint">加载验证码…</span>
+          <button type="button" class="linkish" id="refreshBtn">刷新</button>
+        </div>
+      </div>
+
+      <button class="submit" id="submitBtn" type="submit" disabled>登录</button>
+      <p class="err" id="msg"></p>
+    </form>
+  </div>
+  <script>
+    const apiBaseLabel = document.getElementById('apiBaseLabel')
+    const params = new URLSearchParams(location.search)
+    apiBaseLabel.textContent = params.get('base') || '(via proxy)'
+
+    const usernameEl = document.getElementById('username')
+    const passwordEl = document.getElementById('password')
+    const msgEl = document.getElementById('msg')
+    const submitBtn = document.getElementById('submitBtn')
+    const captchaBox = document.getElementById('captchaBox')
+    const passedBtn = document.getElementById('passedBtn')
+    const bgImg = document.getElementById('bgImg')
+    const puzzleImg = document.getElementById('puzzleImg')
+    const stage = document.getElementById('stage')
+    const track = document.getElementById('track')
+    const knob = document.getElementById('knob')
+    const captchaHint = document.getElementById('captchaHint')
+
+    let captchaId = ''
+    let captchaToken = ''
+    let puzzleSize = 60
+    let bgWidth = 320
+    let sliderY = 0
+    let dragging = false
+    let startX = 0
+    let knobX = 0
+
+    function setMsg(text, ok) {
+      msgEl.textContent = text || ''
+      msgEl.className = ok ? 'err ok' : 'err'
+    }
+
+    async function api(path, opts) {
+      const res = await fetch('/proxy' + path, {
+        method: (opts && opts.method) || 'GET',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, (opts && opts.headers) || {}),
+        body: opts && opts.body ? JSON.stringify(opts.body) : undefined,
+      })
+      const json = await res.json()
+      if (!json || json.code !== '0000') {
+        throw new Error((json && json.message) || '请求失败')
+      }
+      return json.data
+    }
+
+    function setPassed(passed) {
+      if (passed) {
+        captchaBox.classList.add('hide')
+        passedBtn.classList.add('show')
+        submitBtn.disabled = false
+      } else {
+        captchaToken = ''
+        captchaBox.classList.remove('hide')
+        passedBtn.classList.remove('show')
+        submitBtn.disabled = true
+      }
+    }
+
+    function setKnob(x) {
+      const max = Math.max(0, track.clientWidth - knob.offsetWidth - 4)
+      knobX = Math.max(0, Math.min(max, x))
+      knob.style.left = (2 + knobX) + 'px'
+      const scale = stage.clientWidth / bgWidth
+      puzzleImg.style.left = (knobX / (track.clientWidth - knob.offsetWidth - 4)) * (stage.clientWidth - puzzleSize * scale) + 'px'
+    }
+
+    async function loadCaptcha() {
+      setPassed(false)
+      captchaHint.textContent = '加载验证码…'
+      setKnob(0)
+      try {
+        const data = await api('/auth/captcha/create')
+        captchaId = data.captcha_id
+        bgWidth = data.bg_width || 320
+        puzzleSize = data.puzzle_size || 60
+        sliderY = data.y || 0
+        bgImg.src = data.bg_url
+        puzzleImg.src = data.puzzle_url
+        puzzleImg.style.width = puzzleSize + 'px'
+        puzzleImg.style.height = puzzleSize + 'px'
+        await new Promise((resolve) => {
+          if (bgImg.complete) resolve()
+          else bgImg.onload = () => resolve()
+        })
+        const scale = stage.clientWidth / bgWidth
+        puzzleImg.style.top = (sliderY * scale) + 'px'
+        puzzleImg.style.width = (puzzleSize * scale) + 'px'
+        puzzleImg.style.height = (puzzleSize * scale) + 'px'
+        captchaHint.textContent = '拖动滑块完成拼图'
+        setKnob(0)
+      } catch (e) {
+        captchaHint.textContent = '验证码加载失败'
+        setMsg(e.message || String(e))
+      }
+    }
+
+    async function verifyCaptcha() {
+      const max = Math.max(1, track.clientWidth - knob.offsetWidth - 4)
+      const x = (knobX / max) * (bgWidth - puzzleSize)
+      captchaHint.textContent = '校验中…'
+      try {
+        const data = await api('/auth/captcha/verify', {
+          method: 'POST',
+          body: { captcha_id: captchaId, x: x },
+        })
+        captchaToken = data.captcha_token
+        setPassed(true)
+        setMsg('')
+      } catch (e) {
+        setMsg(e.message || String(e))
+        await loadCaptcha()
+      }
+    }
+
+    function onPointerDown(e) {
+      if (captchaToken) return
+      dragging = true
+      startX = (e.touches ? e.touches[0].clientX : e.clientX) - knobX
+      e.preventDefault()
+    }
+    function onPointerMove(e) {
+      if (!dragging) return
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX
+      setKnob(clientX - startX)
+    }
+    async function onPointerUp() {
+      if (!dragging) return
+      dragging = false
+      await verifyCaptcha()
+    }
+
+    knob.addEventListener('mousedown', onPointerDown)
+    knob.addEventListener('touchstart', onPointerDown, { passive: false })
+    window.addEventListener('mousemove', onPointerMove)
+    window.addEventListener('touchmove', onPointerMove, { passive: false })
+    window.addEventListener('mouseup', onPointerUp)
+    window.addEventListener('touchend', onPointerUp)
+    document.getElementById('refreshBtn').addEventListener('click', loadCaptcha)
+    passedBtn.addEventListener('click', loadCaptcha)
+
+    function normalizePublicKey(pem) {
+      return pem
+        .replace('-----BEGIN PUBLIC KEY-----', '')
+        .replace('-----END PUBLIC KEY-----', '')
+        .replace(/\s/g, '')
+    }
+
+    async function encryptPassword(pem, password) {
+      const binary = atob(normalizePublicKey(pem))
+      const bytes = new Uint8Array(binary.length)
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+      const key = await crypto.subtle.importKey(
+        'spki',
+        bytes.buffer,
+        { name: 'RSA-OAEP', hash: 'SHA-256' },
+        false,
+        ['encrypt'],
+      )
+      const encrypted = await crypto.subtle.encrypt(
+        { name: 'RSA-OAEP' },
+        key,
+        new TextEncoder().encode(password),
+      )
+      const out = new Uint8Array(encrypted)
+      let s = ''
+      for (let i = 0; i < out.length; i++) s += String.fromCharCode(out[i])
+      return btoa(s)
+    }
+
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      if (!captchaToken) {
+        setMsg('请先完成安全验证')
+        return
+      }
+      submitBtn.disabled = true
+      setMsg('登录中…', true)
+      try {
+        const pk = await api('/auth/public-key')
+        const cipher = await encryptPassword(pk.public_key, passwordEl.value)
+        const data = await api('/auth/login', {
+          method: 'POST',
+          headers: { 'X-Go-Blog-CLI': '1' },
+          body: {
+            username: usernameEl.value.trim(),
+            password_cipher: cipher,
+            captcha_token: captchaToken,
+            return_token: true,
+          },
+        })
+        if (!data || !data.token) {
+          throw new Error('登录成功但未返回 token，请确认 API 已支持 CLI 回传')
+        }
+        const username = (data.profile && data.profile.username) || usernameEl.value.trim()
+        const done = await fetch('/done', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: data.token, username: username }),
+        })
+        const doneJson = await done.json()
+        if (!done.ok || (doneJson && doneJson.code && doneJson.code !== '0000')) {
+          throw new Error((doneJson && doneJson.message) || '写入凭证失败')
+        }
+        setMsg('登录成功，可关闭此页并继续 upload。', true)
+        submitBtn.textContent = '已登录'
+      } catch (err) {
+        setMsg(err.message || String(err))
+        captchaToken = ''
+        setPassed(false)
+        await loadCaptcha()
+        submitBtn.disabled = false
+      }
+    })
+
+    loadCaptcha()
+  </script>
+</body>
+</html>

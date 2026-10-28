@@ -1,0 +1,50 @@
+[
+  {
+    "id": "classic",
+    "name": "经典蓝",
+    "description": "分节左侧竖条强调，校招常见纸面版式",
+    "defaultColor": "blue",
+    "structure": "sheet-v1",
+    "css": "classic.css"
+  },
+  {
+    "id": "dark-tech",
+    "name": "深色科技",
+    "description": "深色通栏分节标题，偏技术岗风格",
+    "defaultColor": "gray",
+    "structure": "sheet-v1",
+    "css": "dark-tech.css"
+  },
+  {
+    "id": "minimal-gray",
+    "name": "极简灰",
+    "description": "浅灰通栏分节标题，极简排版",
+    "defaultColor": "gray",
+    "structure": "sheet-v1",
+    "css": "minimal-gray.css"
+  },
+  {
+    "id": "label-black",
+    "name": "标签黑",
+    "description": "黑色圆角分节标签，对比强烈",
+    "defaultColor": "black",
+    "structure": "sheet-v1",
+    "css": "label-black.css"
+  },
+  {
+    "id": "orange-simple",
+    "name": "橙色简洁",
+    "description": "圆形图标 + 主题色标题横线",
+    "defaultColor": "orange",
+    "structure": "sheet-v1",
+    "css": "orange-simple.css"
+  },
+  {
+    "id": "super-blue",
+    "name": "超级蓝",
+    "description": "蓝色平行四边形分节徽标",
+    "defaultColor": "blue",
+    "structure": "sheet-v1",
+    "css": "super-blue.css"
+  }
+]

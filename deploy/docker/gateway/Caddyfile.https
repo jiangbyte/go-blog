@@ -1,0 +1,14 @@
+# 裸 IP / 未知 Host：仅 HTTP，不强制跳 HTTPS（与 example.github.io 一致）
+:80 {
+	import app
+}
+
+# 域名：自动 HTTPS（Let's Encrypt）+ 该 Host 的 HTTP→HTTPS
+{$SITE_DOMAIN} {
+	import app
+}
+
+# 可选 www → apex
+www.{$SITE_DOMAIN} {
+	redir https://{$SITE_DOMAIN}{uri} permanent
+}

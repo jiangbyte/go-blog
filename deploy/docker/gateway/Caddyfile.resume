@@ -1,0 +1,37 @@
+# 简历子域名：静态 resume 容器 + 同源 /api → api
+# 仅用 TLS-ALPN-01 申请证书，避免 HTTP-01 被 308→HTTPS 卡死（无证时握手失败）
+{$RESUME_DOMAIN} {
+	tls {
+		issuer acme {
+			disable_http_challenge
+		}
+	}
+
+	encode gzip
+	request_body {
+		max_size 20MB
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	redir /api /api/ 308
+
+	handle_path /api/* {
+		reverse_proxy api:8000 {
+			transport http {
+				read_timeout 3600s
+				write_timeout 3600s
+			}
+		}
+	}
+
+	handle {
+		reverse_proxy resume:80
+	}
+}

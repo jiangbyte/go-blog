@@ -1,0 +1,45 @@
+# 统一反代片段：blog / admin / api
+# Caddy reverse_proxy 会自动设置 X-Forwarded-For / X-Forwarded-Proto，
+# 供 API TOKEN_COOKIE_SECURE=auto 识别 HTTPS。
+(app) {
+	encode gzip
+	request_body {
+		max_size 20MB
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	redir /api /api/ 308
+	redir /admin /admin/ 308
+
+	# 站点地图：对外 /sitemap.xml → API
+	handle /sitemap.xml {
+		rewrite * /portal/blog/sitemap.xml
+		reverse_proxy api:8000
+	}
+
+	# /api/xxx → api:8000/xxx
+	handle_path /api/* {
+		reverse_proxy api:8000 {
+			transport http {
+				read_timeout 3600s
+				write_timeout 3600s
+			}
+		}
+	}
+
+	# /admin/xxx → admin:80/xxx（容器内静态根路径）
+	handle_path /admin/* {
+		reverse_proxy admin:80
+	}
+
+	handle {
+		reverse_proxy blog:80
+	}
+}

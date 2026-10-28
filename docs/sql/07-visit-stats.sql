@@ -1,0 +1,32 @@
+USE go_blog;
+
+-- 访问统计：Redis 热写，异步落库到下列表（启动时可回填 Redis）
+
+CREATE TABLE IF NOT EXISTS blog_stats_total (
+  id TINYINT PRIMARY KEY,
+  site_pv BIGINT NOT NULL DEFAULT 0,
+  site_uv BIGINT NOT NULL DEFAULT 0,
+  article_pv BIGINT NOT NULL DEFAULT 0,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS blog_stats_daily (
+  day DATE NOT NULL PRIMARY KEY,
+  site_pv BIGINT NOT NULL DEFAULT 0,
+  site_uv BIGINT NOT NULL DEFAULT 0,
+  article_pv BIGINT NOT NULL DEFAULT 0,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS blog_entity_views (
+  kind VARCHAR(16) NOT NULL COMMENT 'post | project',
+  uid CHAR(32) NOT NULL,
+  view_count BIGINT NOT NULL DEFAULT 0,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (kind, uid),
+  KEY idx_entity_views_count (kind, view_count)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO blog_stats_total (id, site_pv, site_uv, article_pv)
+VALUES (1, 0, 0, 0)
+ON DUPLICATE KEY UPDATE id = id;
